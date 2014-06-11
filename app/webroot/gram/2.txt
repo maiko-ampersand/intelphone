@@ -1,0 +1,15 @@
+# JSGF V1.0 UTF-8;
+grammar dialer;
+public <dialer> = ( <kanri> | <kaihatu> | <eigyou> ) [さん|くん|さま]
+
+<kanri> = 管理本部 [の] ( 佐々木 | 佐藤 | 河野 ) ;
+<kaihatu> = 開発本部 [の] (佐々木 | 田中 | 中村);
+<eigyou> = 営業本部 [の] (西岡 | 山下 | 小林);
+
+//addWord 管理本部 かんりほんぶ
+//addWord 管理本部 かんりぶ
+//addWord 管理本部 かんり
+
+//addWord 佐々木 ささき
+//addWord 佐藤 さとう
+//addWord 河野 かわの

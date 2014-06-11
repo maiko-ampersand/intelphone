@@ -1,0 +1,31 @@
+# JSGF V1.0 UTF-8;
+grammar dialer;
+public <dialer> = ( <dep1> | <dep2> | <dep4> | <dep5> ) [さん|くん|さま];
+
+<dep1> = 1 [の] ( 2 | 5 );
+<dep2> = 2 [の] ( 7 );
+<dep4> = 4 [の] ( 4 );
+<dep5> = 5 [の] ( 9 );
+
+//addWord 1 えいぎょうぶ
+//addWord 1 えいぎょう
+//addWord 1 えいぎょ
+//addWord 2 まーけてぃんぐぶ
+//addWord 2 まーけてぃんぐ
+//addWord 2 まーけ
+//addWord 4 かんりほんぶ
+//addWord 4 かんりぶ
+//addWord 4 かんり
+//addWord 5 もの
+//addWord 5 こわーきんぐもの
+
+//addWord 2 たなか
+//addWord 2 たなかじろう
+//addWord 2 じろう
+//addWord 5 せいの
+//addWord 5 せいのまいこ
+//addWord 5 へんなひと
+//addWord 7 うえさか
+//addWord 4 さとう
+//addWord 4 ふうたりすと
+//addWord 9 ふるかわ
