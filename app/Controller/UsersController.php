@@ -56,17 +56,17 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->find('first', $options));
 	}
 
-/**
- * add method
- *
- * @return void
- */
+    /**
+     * add method
+     *
+     * @return void
+     */
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				//return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -76,8 +76,8 @@ class UsersController extends AppController {
 	public function getcall() {
 		$this->layout = '';
 		$this->autoRender = false;
-	    header("content-type: text/xml");
-	    echo '<?xml version="1.0" encoding="UTF-8"?>';
+header("content-type: text/xml");
+echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo <<< EOL
 <Response>
 	<Gather action="/users/forwarder" numDigits="2">
@@ -155,49 +155,46 @@ EOL;
 			print '<Dial>+'.$phoneno.'</Dial>';
 			print '</Response>';
 		}
-		die;
 
-		if(!$result === false){
-		}
-		else{
-			print "<Response><Say language=\"ja-jp\">もう一度、部署めいと名前を発話し、シャープを押してください</Say><Record maxLength=\"30\" action=\"recorded.php\" /></Response>";
-		}
+//		if($result === false){
+//			print "<Response><Say language=\"ja-jp\">もう一度、部署めいと名前を発話し、シャープを押してください</Say><Record maxLength=\"30\" action=\"recorded.php\" /></Response>";
+//		}
 	}
 
-	public function test ($user_id) {
-		$this->layout = '';
-		$this->autoRender = false;
-
-		$this->loadModel('Department');
-		$this->loadModel('Employee');
-		$departments = $this->Department->find('list',$options);
-
-		$options = array('conditions' => array('Employee.foword_no'=> '11'));
-		$employees = $this->Employee->find('first',$options);
-		
-		$depyomi = $departments[$employees['Employee']['department_id']];
-		$empyomi = explode(',',$employees['Employee']['first_name']);
-print_r($depyomi);
-				die;
-
-		$buff = file_get_contents('http://api.twilio.com/2010-04-01/Accounts/AC81fcd98c1e2c0840832685e3de0a6444/Recordings/REd7914a3d4bd03de0c50fef65952a1c3e');
-		$amiVoice = new AmiDSRHTTP('http://asr3.amivoice.com:24500/recognize','http://'.$_SERVER['SERVER_NAME'].'/gram/'.$user_id.'.gram');
-		// $amiVoice = new AmiDSRHTTP("http://asr3.amivoice.com:24500/recognize","http://180.235.252.33/twilio/20140326/a_sasaki/dialer/dialer.gram");
-
-		$result = $amiVoice->speechRecognition($buff);
-
-		$this->loadModel('Department');
-		$this->loadModel('Employee');
-		$options = array('conditions' => array('Department.id'=> $result[0]));
-		$departments = $this->Department->find('first',$options);
-
-		$options = array('conditions' => array('Employee.id'=> $result[1]));
-		$employees = $this->Employee->find('first',$options);
-
-		$depyomi = explode(',',$departments['Department']['yomi']);
-		$empyomi = explode(',',$employees['Employee']['first_name']);
-		print_r($depyomi[0]);
-		print_r($empyomi[0]);
+	public function test () {
+//		$this->layout = '';
+//		$this->autoRender = false;
+//
+//		$this->loadModel('Department');
+//		$this->loadModel('Employee');
+//
+//		$options = array('conditions' => array('Employee.foword_no'=> '11'));
+//        $departments = $this->Department->find('list',$options);
+//		$employees = $this->Employee->find('first',$options);
+//
+//		$depyomi = $departments[$employees['Employee']['department_id']];
+////		$empyomi = explode(',',$employees['Employee']['first_name']);
+//print_r($depyomi);
+//				die;
+//
+//		$buff = file_get_contents('http://api.twilio.com/2010-04-01/Accounts/AC81fcd98c1e2c0840832685e3de0a6444/Recordings/REd7914a3d4bd03de0c50fef65952a1c3e');
+//		$amiVoice = new AmiDSRHTTP('http://asr3.amivoice.com:24500/recognize','http://'.$_SERVER['SERVER_NAME'].'/gram/'.$user_id.'.gram');
+//		// $amiVoice = new AmiDSRHTTP("http://asr3.amivoice.com:24500/recognize","http://180.235.252.33/twilio/20140326/a_sasaki/dialer/dialer.gram");
+//
+//		$result = $amiVoice->speechRecognition($buff);
+//
+//		$this->loadModel('Department');
+//		$this->loadModel('Employee');
+//		$options = array('conditions' => array('Department.id'=> $result[0]));
+//		$departments = $this->Department->find('first',$options);
+//
+//		$options = array('conditions' => array('Employee.id'=> $result[1]));
+//		$employees = $this->Employee->find('first',$options);
+//
+//		$depyomi = explode(',',$departments['Department']['yomi']);
+//		$empyomi = explode(',',$employees['Employee']['first_name']);
+//		print_r($depyomi[0]);
+//		print_r($empyomi[0]);
 	}
 
 	public function gram($user_id) {
@@ -221,7 +218,7 @@ print_r($depyomi);
 		$departments = $this->Department->find('all', $options);
 
 		$gramparts = array();
-		foreach ($departments as $key => $value) {
+		foreach ($departments as $value) {
 			$department = $value['Department'];
 			$gramparts[] = ' <dep'.$department['id'].'> ';
 		}
@@ -229,7 +226,7 @@ print_r($depyomi);
 		$gram[] = 'public <dialer> = ('.implode('|', $gramparts).') [さん|くん|さま];';
 		$gram[] = '';
 
-		foreach ($departments as $key => $value) {
+		foreach ($departments as $value) {
 			$department = $value['Department'];
 		
 			$options = array('conditions' => array(
@@ -238,16 +235,16 @@ print_r($depyomi);
 			));
 			$employees = $this->Employee->find('all', $options);
 			$gramparts_last = array();
-			$gramparts_first = array();
-			foreach ($employees as $key => $value) {
-				$employee = $value['Employee'];
+//			$gramparts_first = array();
+			foreach ($employees as $employees_value) {
+				$employee = $employees_value['Employee'];
 				$gramparts_last[] = ' '.$employee['id'].' ';
 			}
 			$gram[] = '<dep'.$department['id'].'> = '.$department['id'].' [の] ('.implode('|', $gramparts_last).');';
 		}
 		$gram[] = '';
 
-		foreach ($departments as $key => $value) {
+		foreach ($departments as $value) {
 			$department = $value['Department'];
 
 			$dep_yomi = explode(',', $department['yomi']);
@@ -257,7 +254,7 @@ print_r($depyomi);
 		}
 		$gram[] = '';
 
-		foreach ($departments as $key => $value) {
+		foreach ($departments as $value) {
 			$department = $value['Department'];
 
 			$options = array('conditions' => array(
@@ -265,10 +262,10 @@ print_r($depyomi);
 				'Employee.user_id' => $user_id
 			));
 			$employees = $this->Employee->find('all', $options);
-			$gramparts_last = array();
-			$gramparts_first = array();
-			foreach ($employees as $key => $value) {
-				$employee = $value['Employee'];
+//			$gramparts_last = array();
+//			$gramparts_first = array();
+			foreach ($employees as $employees_value) {
+				$employee = $employees_value['Employee'];
 				$namae_yomi = explode(',', $employee['first_name']);
 				foreach ($namae_yomi as $yomi) {
 					$gram[] = '//addWord '.$employee['id'].' '.$yomi;
@@ -282,19 +279,19 @@ print_r($depyomi);
 
     	touch( $file_name);
 		$handle = fopen($file_name, 'w');
-		foreach ($gram as $key => $value) {
+		foreach ($gram as $value) {
 			fwrite($handle, mb_convert_encoding($value."\r\n",'UTF-8'));
 		}
 		fclose($handle);
 		return;
 	}
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+    /**
+     * edit method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
 	public function edit($id = null) {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
@@ -302,7 +299,7 @@ print_r($depyomi);
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+//				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -312,13 +309,13 @@ print_r($depyomi);
 		}
 	}
 
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+    /**
+     * delete method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
 	public function delete($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -330,5 +327,6 @@ print_r($depyomi);
 		} else {
 			$this->Session->setFlash(__('The user could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
-	}}
+//		return $this->redirect(array('action' => 'index'));
+	}
+}
