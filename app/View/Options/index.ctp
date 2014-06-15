@@ -1,38 +1,32 @@
 <div class="options index">
 <h2><?php _h('オプション管理'); ?></h2>
-  <table class="table table-striped table-hover ">
-  	<thead>
-		<tr>
-			<th><?php echo $this->Paginator->sort('id','管理番号'); ?></th>
-			<th><?php echo $this->Paginator->sort('foword_no','内線番号'); ?></th>
-			<th><?php echo $this->Paginator->sort('department_id','所属部署'); ?></th>
-			<th><?php echo $this->Paginator->sort('last_name','氏名'); ?></th>
-			<th><?php echo $this->Paginator->sort('first_name','読みがな・呼称'); ?></th>
-			<th><?php echo $this->Paginator->sort('phone_no','転送先電話番号'); ?></th>
-			<th>着電受付時間</th>
-			<th class="actions"><?php echo __('操作'); ?></th>
-		</tr>
-  	</thead>
-    <tbody>
-		<?php foreach ($employees as $employee): ?>
-		<tr>
-			<td><?php echo h($employee['Employee']['id']); ?>&nbsp;</td>
-			<td><?php echo h($employee['Employee']['foword_no']); ?>&nbsp;</td>
-
-			<td>
-				<?php echo h($departments[$employee['Employee']['department_id']]); ?>
-				&nbsp;
-			</td>
-			<td><?php echo h($employee['Employee']['last_name']); ?>&nbsp;</td>
-			<td><?php echo h($employee['Employee']['first_name']); ?>&nbsp;</td>
-			<td><?php echo h($employee['Employee']['phone_no']); ?>&nbsp;</td>
-			<td>9:00 〜 19:00</td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $employee['Employee']['id'])); ?>
-				<?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $employee['Employee']['id']), null, __('本当に削除してもよろしいですか？ #管理番号:%s', $employee['Employee']['id'])); ?>
-			</td>
-		</tr>
-		<?php endforeach; ?>
-    </tbody>
-  </table>
+<?php echo $this->Form->create('',array('class'=>'form-horizontal well bs-component')); ?>
+<fieldset>
+  <legend>オプション情報修正</legend>
+  <div class="form-group">
+    <label for="inputEmail" class="col-lg-2 control-label">始業・電話受付開始時間</label>
+    <div class="col-lg-10">
+      <?php echo $this->Form->input('opeing_time', array('label' => false ,'class'=>'form-control', 'div' => false)); ?>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-lg-2 control-label">終業・電話受付終了時間</label>
+    <div class="col-lg-10">
+      <?php echo $this->Form->input('ending_time', array('label' => false ,'class'=>'form-control', 'div' => false)); ?>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail" class="col-lg-2 control-label">留守電メッセージ</label>
+    <div class="col-lg-10">
+      <?php echo $this->Form->input('answering_machine_message', array('label' => false ,'type'=>'textarea', 'class'=>'form-control', 'div' => false)); ?>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <input type="submit" class="btn btn-primary" value="登録">
+    </div>
+  </div>
+</fieldset>
+<?php  echo $this->Form->input('id'); ?>
+<?php echo $this->Form->end(); ?>
 </div>
