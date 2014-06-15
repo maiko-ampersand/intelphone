@@ -19,9 +19,17 @@ class OptionsController extends AppController {
 
 		$this->loadModel('Option');
 
-		$options = array('conditions' => array('Option.user_id' => $this->Auth->user('id')));
-		$finduser = $this->Option->find('all', $options);
-
-		$this->set('usercount',count($finduser));
+        if ($this->request->is(array('post', 'put'))) {
+            $this->request->data['Option']['user_id'] = $this->Auth->user('id');
+            if ($this->Option->save($this->request->data)) {
+                $this->Session->setFlash(__('The Option has been saved.'));
+//                return $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('The Option could not be saved. Please, try again.'));
+            }
+        } else {
+            $options = array('conditions' => array('Option.user_id' => $this->Auth->user('id')));
+            $this->request->data = $this->Option->find('first', $options);
+        }
 	}
 }
