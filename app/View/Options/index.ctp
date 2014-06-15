@@ -1,8 +1,5 @@
-<div class="employees index">
-<h2><?php _h('利用者管理'); ?></h2>
-<p>
-	<a href="/employees/add" class="btn btn-primary">新規追加</a>
-</p>
+<div class="options index">
+<h2><?php _h('オプション管理'); ?></h2>
   <table class="table table-striped table-hover ">
   	<thead>
 		<tr>

@@ -17,10 +17,10 @@ class OptionsController extends AppController {
 
 	public function index() {
 
-		$this->loadModel('Employees');
+		$this->loadModel('Option');
 
-		$options = array('conditions' => array('Employees.user_id' => $this->Auth->user('id')));
-		$finduser = $this->Employees->find('all', $options);
+		$options = array('conditions' => array('Option.user_id' => $this->Auth->user('id')));
+		$finduser = $this->Option->find('all', $options);
 
 		$this->set('usercount',count($finduser));
 	}
