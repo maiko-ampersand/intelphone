@@ -14,7 +14,7 @@
                     <li><a href="/mypage">マイページ</a></li>
                     <li><a href="/employees">利用者管理</a></li>
                     <li><a href="/departments">部署・肩書管理</a></li>
-                    <li><a href="#"><del>オプション管理</del></a></li>
+                    <li><a href="/options">オプション管理</a></li>
                     <li><a href="/login/logout">ログアウト</a></li>
                   </ul>
                 </div>

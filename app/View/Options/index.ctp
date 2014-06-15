@@ -2,7 +2,6 @@
 <h2><?php _h('オプション管理'); ?></h2>
 <?php echo $this->Form->create('',array('class'=>'form-horizontal well bs-component')); ?>
 <fieldset>
-  <legend>オプション情報修正</legend>
   <div class="form-group">
     <label for="inputEmail" class="col-lg-2 control-label">始業・電話受付開始時間</label>
     <div class="col-lg-10">

@@ -12,7 +12,6 @@
 			<th><?php echo $this->Paginator->sort('last_name','氏名'); ?></th>
 			<th><?php echo $this->Paginator->sort('first_name','読みがな・呼称'); ?></th>
 			<th><?php echo $this->Paginator->sort('phone_no','転送先電話番号'); ?></th>
-			<th>着電受付時間</th>
 			<th class="actions"><?php echo __('操作'); ?></th>
 		</tr>
   	</thead>
@@ -29,7 +28,6 @@
 			<td><?php echo h($employee['Employee']['last_name']); ?>&nbsp;</td>
 			<td><?php echo h($employee['Employee']['first_name']); ?>&nbsp;</td>
 			<td><?php echo h($employee['Employee']['phone_no']); ?>&nbsp;</td>
-			<td>9:00 〜 19:00</td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('編集'), array('action' => 'edit', $employee['Employee']['id'])); ?>
 				<?php echo $this->Form->postLink(__('削除'), array('action' => 'delete', $employee['Employee']['id']), null, __('本当に削除してもよろしいですか？ #管理番号:%s', $employee['Employee']['id'])); ?>
