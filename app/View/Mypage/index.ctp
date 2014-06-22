@@ -20,12 +20,12 @@
           <tr>
             <th>ご利用中の人数</th>
             <td><?php _h($usercount); ?> 名</td>
-            <td><a href="#">編集</a></td>
+            <td><a href="#"><del>編集</del></a></td>
           </tr>
           <tr>
             <th>ご利用中のオプション</th>
             <td>留守番電話 / 時間外対応</td>
-            <td><a href="#">編集</a></td>
+            <td><a href="#"><del>編集</del></a></td>
           </tr>
         </tbody>
       </table>
