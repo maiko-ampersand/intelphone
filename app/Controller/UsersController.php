@@ -155,7 +155,7 @@ EOL;
 
 			print '<Response>';
 			print '<Say language="ja-jp">'.$depyomi.$empyomi.' に、電話をおつなぎします。</Say>';
-			print '<Dial>+'.$phoneno.'</Dial>';
+			print '<Dial callerId="+81 50-3159-7408">+'.$phoneno.'</Dial>';
 			print '</Response>';
 		}
 
