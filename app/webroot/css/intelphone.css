@@ -2796,3 +2796,6 @@ body {
 .marketing .col-lg-3 h2{
   font-size: 20px;
 }
+[name*=opeing_time] {
+    width : 20%;
+}
