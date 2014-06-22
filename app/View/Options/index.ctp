@@ -4,14 +4,12 @@
 <fieldset>
   <div class="form-group">
     <label class="col-lg-2 control-label">始業・電話受付開始時間</label>
-    <small>営業時間外の架電は指定の留守電メッセージを流します。</small>
     <div class="col-lg-10">
       <?php echo $this->Form->input('opeing_time', array('label' => false ,'class'=>'form-control', 'div' => false)); ?>
     </div>
   </div>
     <div class="form-group">
         <label class="col-lg-2 control-label">終業・電話受付終了時間</label>
-        <small>営業時間外の架電は指定の留守電メッセージを流します。</small>
         <div class="col-lg-10">
             <?php echo $this->Form->input('ending_time', array('label' => false ,'class'=>'form-control', 'div' => false)); ?>
         </div>
@@ -25,6 +23,7 @@
     </div>
   <div class="form-group">
     <label class="col-lg-2 control-label">留守電メッセージ</label>
+    <small>営業時間外の架電は指定の留守電メッセージを流します。</small>
     <div class="col-lg-10">
       <?php echo $this->Form->input('answering_machine_message', array('label' => false ,'type'=>'textarea', 'class'=>'form-control', 'div' => false)); ?>
     </div>

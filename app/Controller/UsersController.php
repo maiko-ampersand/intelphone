@@ -81,7 +81,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 echo <<< EOL
 <Response>
 	<Gather action="/users/forwarder" numDigits="2">
-	<Say language="ja-jp">内線番号を入力するか、ピーという音がなったら、部署めいと名前をおよびいただき、シャープを押してください</Say>
+	<Say language="ja-jp">内線番号を入力してください</Say>
 	</Gather>
 	<Record maxLength="60" action="/users/forwarder" />
 </Response>
@@ -95,22 +95,25 @@ EOL;
 	    header("content-type: text/xml");
 	    echo '<?xml version="1.0" encoding="UTF-8"?>';
 		$options = array('conditions' => array('User.phoneno' => $_REQUEST['CalledVia']));
-		$finduser = $this->User->find('first', $options);
+		$findUser = $this->User->find('first', $options);
+        $depyomi = '';
+        $empyomi = '';
+        $phoneno = null;
 
-		if(count($finduser) == 0){
+		if(count($findUser) == 0){
 			print '<Response><Say language="ja-jp">この電話番号は、利用登録されていません</Say></Response>';
 		}
 		else{
 
 			$user_pushed = (int) $_REQUEST['Digits'];
 			$this->log($user_pushed);
-			$finduser = $finduser['User'];
+			$findUser = $findUser['User'];
 
 			if(isset($_REQUEST['Digits']) && $_REQUEST['Digits'] != '' && $_REQUEST['Digits'] != '#') {
 				$this->loadModel('Department');
 				$this->loadModel('Employee');
 				
-				$options = array('conditions' => array('Department.user_id'=> $finduser['id']));
+				$options = array('conditions' => array('Department.user_id'=> $findUser['id']));
 				$departments = $this->Department->find('list',$options);
 
 				$options = array('conditions' => array('Employee.foword_no'=> $_REQUEST['Digits']));
@@ -123,30 +126,30 @@ EOL;
 
 			}
 			else {
-				$buff = file_get_contents($_REQUEST['RecordingUrl']);
-				// 録音データ・営業本部佐藤
-				//$buff = file_get_contents('http://api.twilio.com/2010-04-01/Accounts/AC81fcd98c1e2c0840832685e3de0a6444/Recordings/REd7914a3d4bd03de0c50fef65952a1c3e');
-				$amiVoice = new AmiDSRHTTP('http://asr3.amivoice.com:24500/recognize','http://'.$_SERVER['SERVER_NAME'].'/gram/'.$finduser['id'].'.gram');
-				// 肩書と名前が返ってくる
-				$result = $amiVoice->speechRecognition($buff);
-				$this->loadModel('Department');
-				$this->loadModel('Employee');
-				$options = array('conditions' => array('Department.id'=> $result[0]));
-				$departments = $this->Department->find('first',$options);
-				$depyomi = explode(',',$departments['Department']['yomi']);
-
-				$options = array('conditions' => array('Employee.id'=> $result[1]));
-				$employees = $this->Employee->find('first',$options);
-				$empyomi = explode(',',$employees['Employee']['first_name']);
-				$phoneno = $employees['Employee']['phone_no'];
-
-				if(isset($depyomi[0]) && $depyomi[0] != '') {
-					$depyomi = $depyomi[0].'の' ;
-				}
-				else {
-					$depyomi = '';
-				}
-				$empyomi = $empyomi[0];
+//				$buff = file_get_contents($_REQUEST['RecordingUrl']);
+//				// 録音データ・営業本部佐藤
+//				//$buff = file_get_contents('http://api.twilio.com/2010-04-01/Accounts/AC81fcd98c1e2c0840832685e3de0a6444/Recordings/REd7914a3d4bd03de0c50fef65952a1c3e');
+//				$amiVoice = new AmiDSRHTTP('http://asr3.amivoice.com:24500/recognize','http://'.$_SERVER['SERVER_NAME'].'/gram/'.$findUser['id'].'.gram');
+//				// 肩書と名前が返ってくる
+//				$result = $amiVoice->speechRecognition($buff);
+//				$this->loadModel('Department');
+//				$this->loadModel('Employee');
+//				$options = array('conditions' => array('Department.id'=> $result[0]));
+//				$departments = $this->Department->find('first',$options);
+//				$depyomi = explode(',',$departments['Department']['yomi']);
+//
+//				$options = array('conditions' => array('Employee.id'=> $result[1]));
+//				$employees = $this->Employee->find('first',$options);
+//				$empyomi = explode(',',$employees['Employee']['first_name']);
+//				$phoneno = $employees['Employee']['phone_no'];
+//
+//				if(isset($depyomi[0]) && $depyomi[0] != '') {
+//					$depyomi = $depyomi[0].'の' ;
+//				}
+//				else {
+//					$depyomi = '';
+//				}
+//				$empyomi = $empyomi[0];
 			}
 
 
